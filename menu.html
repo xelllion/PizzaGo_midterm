@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PizzaGo menu: 8 pizzas in three sizes, snacks, drinks and desserts.">
+    <title>Menu | PizzaGo</title>
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&display=swap" rel="stylesheet">
+    <link href="vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 4 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 .3 1.5 1 2 2 2-.5-3 0-5 1-8z"/></symbol>
+<symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h5l3 8M10 9L9 6H7M13 12h4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.500-1-8-4-8-9V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></symbol>
+<symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2.500l2.200 11h10l2-8H7"/><circle cx="9" cy="19" r="1.500"/><circle cx="17" cy="19" r="1.500"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-15 15zM5 19c3-5 6-8 10-10"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M12 9v12M3 13h18M12 9C9 9 7 7 8 5.500S11.500 5 12 9c.500-4 3-4.500 4-3.500S15 9 12 9z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></symbol>
+</defs></svg>
+<header class="site-header sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" aria-label="PizzaGo home">
+                <img src="images/logo.svg" alt="" width="46" height="46">
+                <span class="brand-word">Pizza<span>Go</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav mx-lg-auto align-items-lg-center"><li class="nav-item"><a class="nav-link" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link active" href="menu.html" aria-current="page">Menu</a></li><li class="nav-item"><a class="nav-link" href="deals.html">Deals</a></li><li class="nav-item"><a class="nav-link" href="tracking.html">Track order</a></li><li class="nav-item"><a class="nav-link" href="contact.html">About & contact</a></li></ul>
+                <div class="header-actions d-flex align-items-center gap-3">
+                    <a class="header-phone d-none d-xl-flex" href="tel:+77077076767"><svg class="icon " aria-hidden="true"><use href="#i-phone"/></svg> +7 707 707 67 67</a>
+                    <a class="cart-link" href="cart.html" aria-label="Open cart"><svg class="icon " aria-hidden="true"><use href="#i-cart"/></svg> Cart <span class="cart-count" aria-live="polite">0</span></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+
+<section class="page-hero"><div class="container"><h1>Our menu</h1><p>Every pizza is baked after you order. Choose a size and add it to your cart.</p></div></section>
+<div class="menu-nav-wrap"><div class="container"><nav class="menu-nav" aria-label="Menu categories">
+    <a class="active" href="#pizza"><img src="images/pepperoni.svg" alt="">Pizza</a>
+    <a href="#snacks"><img src="images/garlic.svg" alt="">Snacks</a>
+    <a href="#drinks"><img src="images/cola.svg" alt="">Drinks</a>
+    <a href="#desserts"><img src="images/cheesecake.svg" alt="">Desserts</a>
+    <a href="deals.html"><img src="images/logo.svg" alt="">Deals</a>
+</nav></div></div>
+<section class="menu-section" id="pizza" aria-labelledby="pizza-title">
+    <div class="container">
+        <h2 id="pizza-title">Pizza</h2>
+        <div class="chips" role="group" aria-label="Filter pizzas">
+            <button class="chip active" type="button" data-filter="all">All</button>
+            <button class="chip" type="button" data-filter="classic">Classic</button>
+            <button class="chip" type="button" data-filter="meat">Meat</button>
+            <button class="chip" type="button" data-filter="veg">Vegetarian</button>
+            <button class="chip" type="button" data-filter="spicy">Spicy</button>
+        </div>
+        <div class="dish-grid"><article class="dish" data-id="pepperoni" data-tags="classic meat">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag hot">Bestseller</span></div>
+        <img src="images/pepperoni.svg" alt="Pepperoni" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Pepperoni</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.9</strong> · (812)</div>
+        <p class="dish-desc">Double pepperoni, stretchy mozzarella and our slow-cooked tomato sauce.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Pepperoni"><input type="radio" name="size-pepperoni" id="pepperoni-25" ><label for="pepperoni-25">25 cm</label><input type="radio" name="size-pepperoni" id="pepperoni-30" checked><label for="pepperoni-30">30 cm</label><input type="radio" name="size-pepperoni" id="pepperoni-35" ><label for="pepperoni-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 490 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="margherita" data-tags="classic veg">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag veg">Vegetarian</span></div>
+        <img src="images/margherita.svg" alt="Margherita" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Margherita</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.8</strong> · (534)</div>
+        <p class="dish-desc">Fresh mozzarella, ripe tomatoes, basil and a drizzle of olive oil.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Margherita"><input type="radio" name="size-margherita" id="margherita-25" ><label for="margherita-25">25 cm</label><input type="radio" name="size-margherita" id="margherita-30" checked><label for="margherita-30">30 cm</label><input type="radio" name="size-margherita" id="margherita-35" ><label for="margherita-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">2 990 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="bbq" data-tags="meat">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag new">New</span></div>
+        <img src="images/bbq.svg" alt="BBQ Chicken" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>BBQ Chicken</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.8</strong> · (377)</div>
+        <p class="dish-desc">Juicy chicken in smoky BBQ glaze, red onion, sweet corn and mozzarella.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of BBQ Chicken"><input type="radio" name="size-bbq" id="bbq-25" ><label for="bbq-25">25 cm</label><input type="radio" name="size-bbq" id="bbq-30" checked><label for="bbq-30">30 cm</label><input type="radio" name="size-bbq" id="bbq-35" ><label for="bbq-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 790 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="cheese" data-tags="classic veg">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag veg">Vegetarian</span></div>
+        <img src="images/cheese.svg" alt="Four Cheese" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Four Cheese</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.9</strong> · (641)</div>
+        <p class="dish-desc">Mozzarella, cheddar, gorgonzola and parmesan melted into one golden layer.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Four Cheese"><input type="radio" name="size-cheese" id="cheese-25" ><label for="cheese-25">25 cm</label><input type="radio" name="size-cheese" id="cheese-30" checked><label for="cheese-30">30 cm</label><input type="radio" name="size-cheese" id="cheese-35" ><label for="cheese-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 590 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="veggie" data-tags="veg">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag veg">Vegetarian</span></div>
+        <img src="images/veggie.svg" alt="Garden Veggie" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Garden Veggie</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.7</strong> · (289)</div>
+        <p class="dish-desc">Tomatoes, mushrooms, bell peppers, olives and red onion on a herb sauce.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Garden Veggie"><input type="radio" name="size-veggie" id="veggie-25" ><label for="veggie-25">25 cm</label><input type="radio" name="size-veggie" id="veggie-30" checked><label for="veggie-30">30 cm</label><input type="radio" name="size-veggie" id="veggie-35" ><label for="veggie-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 290 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="diavola" data-tags="spicy meat">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag hot">Spicy</span></div>
+        <img src="images/diavola.svg" alt="Diavola" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Diavola</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.8</strong> · (456)</div>
+        <p class="dish-desc">Hot salami, jalapeño, red pepper and chili flakes. Not for the faint-hearted.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Diavola"><input type="radio" name="size-diavola" id="diavola-25" ><label for="diavola-25">25 cm</label><input type="radio" name="size-diavola" id="diavola-30" checked><label for="diavola-30">30 cm</label><input type="radio" name="size-diavola" id="diavola-35" ><label for="diavola-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 690 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="mushroom" data-tags="veg">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag new">Chef's pick</span></div>
+        <img src="images/mushroom.svg" alt="Truffle Mushroom" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Truffle Mushroom</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.9</strong> · (203)</div>
+        <p class="dish-desc">Creamy white sauce, roasted mushrooms, thyme, parmesan and black pepper.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Truffle Mushroom"><input type="radio" name="size-mushroom" id="mushroom-25" ><label for="mushroom-25">25 cm</label><input type="radio" name="size-mushroom" id="mushroom-30" checked><label for="mushroom-30">30 cm</label><input type="radio" name="size-mushroom" id="mushroom-35" ><label for="mushroom-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 890 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="meat" data-tags="meat">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag hot">Hearty</span></div>
+        <img src="images/meat.svg" alt="Meat Feast" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Meat Feast</h3>
+        <div class="dish-rating"><span class="stars" aria-hidden="true">★</span><strong>4.8</strong> · (498)</div>
+        <p class="dish-desc">Pepperoni, sausage, crispy bacon and bell pepper. A real feast.</p>
+        <div class="size-picker" role="radiogroup" aria-label="Size of Meat Feast"><input type="radio" name="size-meat" id="meat-25" ><label for="meat-25">25 cm</label><input type="radio" name="size-meat" id="meat-30" checked><label for="meat-30">30 cm</label><input type="radio" name="size-meat" id="meat-35" ><label for="meat-35">35 cm</label></div>
+        <div class="dish-buy"><div class="price"><span class="js-price">3 990 ₸</span></div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article></div>
+    </div>
+</section>
+<section class="menu-section" id="snacks" aria-labelledby="snacks-title">
+    <div class="container">
+        <h2 id="snacks-title">Snacks</h2>
+        
+        <div class="dish-grid"><article class="dish" data-id="garlic">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag hot">Popular</span></div>
+        <img src="images/garlic.svg" alt="Garlic Knots" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Garlic Knots</h3>
+        
+        <p class="dish-desc">Six warm knots brushed with garlic butter, with a creamy dip.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">1 290 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="wings">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag hot">Spicy</span></div>
+        <img src="images/wings.svg" alt="Spicy Wings" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Spicy Wings</h3>
+        
+        <p class="dish-desc">Eight crispy wings in a sticky chili glaze and sesame seeds.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">1 990 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article></div>
+    </div>
+</section>
+<section class="menu-section" id="drinks" aria-labelledby="drinks-title">
+    <div class="container">
+        <h2 id="drinks-title">Drinks</h2>
+        
+        <div class="dish-grid"><article class="dish" data-id="cola">
+    <div class="dish-photo">
+        <div class="badges"></div>
+        <img src="images/cola.svg" alt="Cola 0.5 L" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Cola 0.5 L</h3>
+        
+        <p class="dish-desc">Ice-cold, extra fizzy. The classic pizza partner.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">590 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="lemonade">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag veg">Fresh</span></div>
+        <img src="images/lemonade.svg" alt="Mint Lemonade" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Mint Lemonade</h3>
+        
+        <p class="dish-desc">Fresh lemon, mint and ice. Homemade every morning.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">890 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article></div>
+    </div>
+</section>
+<section class="menu-section" id="desserts" aria-labelledby="desserts-title">
+    <div class="container">
+        <h2 id="desserts-title">Desserts</h2>
+        
+        <div class="dish-grid"><article class="dish" data-id="cheesecake">
+    <div class="dish-photo">
+        <div class="badges"></div>
+        <img src="images/cheesecake.svg" alt="Strawberry Cheesecake" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Strawberry Cheesecake</h3>
+        
+        <p class="dish-desc">Creamy New York style with strawberry sauce.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">1 390 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article><article class="dish" data-id="brownie">
+    <div class="dish-photo">
+        <div class="badges"><span class="badge-tag new">Sweet</span></div>
+        <img src="images/brownie.svg" alt="Brownie & Ice Cream" loading="lazy" width="400" height="400">
+    </div>
+    <div class="dish-body">
+        <h3>Brownie & Ice Cream</h3>
+        
+        <p class="dish-desc">Warm chocolate brownie with a scoop of vanilla ice cream.</p>
+        <div class="size-spacer"><svg class="icon " aria-hidden="true"><use href="#i-check"/></svg> One portion, made to order</div>
+        <div class="dish-buy"><div class="price">1 490 ₸</div><button class="btn-pizza btn-sm-pizza js-add" type="button"><svg class="icon " aria-hidden="true"><use href="#i-plus"/></svg> Add</button></div>
+    </div>
+</article></div>
+    </div>
+</section>
+
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a class="navbar-brand mb-2" href="index.html"><img src="images/logo.svg" alt="" width="44" height="44"><span class="brand-word">Pizza<span>Go</span></span></a>
+                <p>Hand-stretched dough, real mozzarella and a courier who knows the shortcuts. Astana, every day 10:00–23:30.</p>
+            </div>
+            <nav aria-label="Footer menu">
+                <h3>Order</h3>
+                <ul><li><a href="menu.html#pizza">Pizza</a></li><li><a href="menu.html#snacks">Snacks</a></li><li><a href="menu.html#drinks">Drinks</a></li><li><a href="menu.html#desserts">Desserts</a></li><li><a href="deals.html">Deals</a></li></ul>
+            </nav>
+            <nav aria-label="Help links">
+                <h3>Help</h3>
+                <ul><li><a href="cart.html">Cart &amp; checkout</a></li><li><a href="tracking.html">Track my order</a></li><li><a href="contact.html#faq">Delivery questions</a></li><li><a href="contact.html">Contact us</a></li></ul>
+            </nav>
+            <address class="mb-0">
+                <h3>Contact</h3>
+                <ul><li><svg class="icon " aria-hidden="true"><use href="#i-phone"/></svg> <a href="tel:+77077076767">+7 707 707 67 67</a></li><li><svg class="icon " aria-hidden="true"><use href="#i-mail"/></svg> <a href="mailto:hello@pizzago.kz">hello@pizzago.kz</a></li><li><svg class="icon " aria-hidden="true"><use href="#i-pin"/></svg> Astana, Mangilik El 10</li>
+                <li><a href="https://github.com/xelllion" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.instagram.com/p_qwack" target="_blank" rel="noopener">Instagram</a></li></ul>
+            </address>
+        </div>
+        <div class="footer-bottom"><span>© 2026 PizzaGo. Student midterm project — WEB course, SE-2529.</span><span>Prices in Kazakhstani tenge (₸)</span></div>
+    </div>
+</footer>
+<a class="mobile-cart-bar" href="cart.html" aria-label="Go to cart"><span><svg class="icon " aria-hidden="true"><use href="#i-cart"/></svg> Your cart</span><span id="mobileCartTotal">Empty</span></a>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="cartToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+        <div class="toast-header"><strong class="me-auto">PizzaGo</strong><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button></div>
+        <div class="toast-body"></div>
+    </div>
+</div>
+<script src="vendor/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
