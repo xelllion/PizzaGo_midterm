@@ -238,6 +238,57 @@ function setupCart() {
     renderCart();
 }
 
+function showOrder(order) {
+    const result = document.getElementById("trackResult");
+    result.hidden = false;
+    document.getElementById("trackId").textContent = order.id;
+    document.getElementById("trackDetails").textContent = `${order.address} · Total: ${money(order.total)}`;
+    const update = () => {
+        const stage = Math.min(3, Math.max(0, Math.floor((Date.now() - order.createdAt) / 20000)));
+        document.getElementById("trackStatus").textContent = stages[stage];
+        document.querySelectorAll("#trackStages li").forEach((item, index) => {
+            item.classList.toggle("fw-bold", index === stage);
+            item.classList.toggle("text-success", index <= stage);
+            item.setAttribute("aria-current", index === stage ? "step" : "false");
+        });
+        if (stage === 3) clearInterval(trackingTimer);
+    };
+    trackingTimer = setInterval(update, 1000);
+    update();
+}
+
+function setupTracking() {
+    const form = document.getElementById("trackForm");
+    if (!form) return;
+    const input = document.getElementById("orderInput");
+    const lookup = () => {
+        clearInterval(trackingTimer);
+        document.getElementById("trackResult").hidden = true;
+        const id = input.value.trim().toUpperCase();
+        let order = readStorage(orderKey, null);
+        if (id === "PG1024") {
+            order = readStorage(demoKey, null);
+            if (!order) {
+                order = { id, createdAt: Date.now(), total: 4180, address: "Demo address in Astana" };
+                localStorage.setItem(demoKey, JSON.stringify(order));
+            }
+        }
+        const found = order && order.id === id;
+        document.getElementById("trackMessage").textContent = found ? "" : id ? "Order not found. Check the number or try PG1024." : "Please enter an order number.";
+        if (found) showOrder(order);
+    };
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        lookup();
+    });
+    const requested = new URLSearchParams(location.search).get("order");
+    if (requested) {
+        input.value = requested;
+        lookup();
+    }
+    window.addEventListener("pagehide", () => clearInterval(trackingTimer));
+}
+
 function setupContact() {
     const form = document.getElementById("contactForm");
     if (!form) return;
@@ -253,5 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     setupMenu();
     setupCart();
+    setupTracking();
     setupContact();
 });
