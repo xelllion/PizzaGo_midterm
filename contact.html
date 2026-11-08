@@ -81,9 +81,18 @@
                     </tbody>
                 </table>
                 <h2 class="h4 mt-4">Delivery questions</h2>
-                <details class="card p-3 mb-2"><summary>How much is delivery?</summary><p class="mt-2 mb-0">690 ₸, or free when your subtotal after discount reaches 6,000 ₸.</p></details>
-                <details class="card p-3 mb-2"><summary>What pizza sizes are available?</summary><p class="mt-2 mb-0">Our pizzas come in 25, 30 and 35 cm sizes.</p></details>
-                <details class="card p-3"><summary>Can I place a real order?</summary><p class="mt-2 mb-0">This is a student demonstration. No real orders, messages or payments are processed.</p></details>
+                <div class="faq-item card p-3 mb-2">
+                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="deliveryAnswer">How much is delivery?</button></h3>
+                    <p class="faq-answer mt-2 mb-0" id="deliveryAnswer">690 ₸, or free when your subtotal after discount reaches 6,000 ₸.</p>
+                </div>
+                <div class="faq-item card p-3 mb-2">
+                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="sizesAnswer">What pizza sizes are available?</button></h3>
+                    <p class="faq-answer mt-2 mb-0" id="sizesAnswer">Our pizzas come in 25, 30 and 35 cm sizes.</p>
+                </div>
+                <div class="faq-item card p-3">
+                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="demoAnswer">Can I place a real order?</button></h3>
+                    <p class="faq-answer mt-2 mb-0" id="demoAnswer">This is a student demonstration. No real orders, messages or payments are processed.</p>
+                </div>
             </section>
         </div>
     </main>
@@ -95,6 +104,7 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

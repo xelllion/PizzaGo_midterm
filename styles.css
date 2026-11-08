@@ -105,6 +105,10 @@ a {
     --bs-table-bg: transparent;
 }
 
+.faq-answer {
+    display: none;
+}
+
 @media (max-width: 991.98px) {
     #heroTitle {
         font-size: 3rem;

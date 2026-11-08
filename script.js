@@ -108,6 +108,7 @@ function setupMenu() {
     list.addEventListener("change", event => {
         const card = event.target.closest("article");
         card.querySelector(".price").textContent = money(getProduct(card.dataset.id).prices[event.target.value]);
+        card.querySelector(".add-button").textContent = "Add to cart";
     });
     list.addEventListener("click", event => {
         if (!event.target.closest(".add-button")) return;
@@ -115,6 +116,7 @@ function setupMenu() {
         const select = card.querySelector("select");
         const sizeIndex = select ? Number(select.value) : 0;
         addToCart(card.dataset.id, sizeIndex);
+        card.querySelector(".add-button").textContent = "Added — add again";
         document.getElementById("menuFeedback").textContent = `${itemName({ id: card.dataset.id, sizeIndex })} added to your cart.`;
     });
     renderMenu();
@@ -298,10 +300,28 @@ function setupContact() {
     });
 }
 
+function setupJQuery() {
+    $.fx.off = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $(".faq-question").on("click", function () {
+        const expanded = $(this).attr("aria-expanded") === "true";
+        $(this).attr("aria-expanded", String(!expanded));
+        $(this).closest(".faq-item").find(".faq-answer").stop(true, true).slideToggle(150);
+    });
+    $("#contactTopic").on("change", function () {
+        const message = $(this).find("option:selected").data("help") || "";
+        $("#topicHelp").stop(true, true).hide().text(message).fadeIn(150);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     setupMenu();
     setupCart();
     setupTracking();
     setupContact();
+    setupJQuery();
+});
+
+window.addEventListener("pageshow", event => {
+    if (event.persisted) location.reload();
 });
