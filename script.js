@@ -300,10 +300,28 @@ function setupContact() {
     });
 }
 
+function setupJQuery() {
+    $.fx.off = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $(".faq-question").on("click", function () {
+        const expanded = $(this).attr("aria-expanded") === "true";
+        $(this).attr("aria-expanded", String(!expanded));
+        $(this).closest(".faq-item").find(".faq-answer").stop(true, true).slideToggle(150);
+    });
+    $("#contactTopic").on("change", function () {
+        const message = $(this).find("option:selected").data("help") || "";
+        $("#topicHelp").stop(true, true).hide().text(message).fadeIn(150);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     setupMenu();
     setupCart();
     setupTracking();
     setupContact();
+    setupJQuery();
+});
+
+window.addEventListener("pageshow", event => {
+    if (event.persisted) location.reload();
 });
