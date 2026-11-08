@@ -10,7 +10,7 @@ Serve this folder with an IDE static preview such as Live Server, then open `ind
 
 No build, npm install, application server or database is needed. Internet access is required for Bootstrap 5.3.8 from jsDelivr and full jQuery 3.7.1 from code.jquery.com. Images are local. The CDN tags pin versions and include integrity hashes.
 
-**GitHub Pages:** [PizzaGo](https://xelllion.github.io/PizzaGo_midterm/). Pages publishes `main` from the repository root. Changes in `codex/pizzago-simplify-endterm` appear there after the PR is merged and the Pages deployment succeeds.
+**GitHub Pages:** [PizzaGo](https://xelllion.github.io/PizzaGo_midterm/). The repository has one branch, `main`. GitHub Pages publishes this branch from the repository root after a successful deployment.
 
 ## Pages and features
 
@@ -23,7 +23,7 @@ No build, npm install, application server or database is needed. Internet access
 | Track order | Last saved order or PG1024; four stages over one minute |
 | Contact | Story, contact details, hours, validated message form, jQuery topic hints and FAQ |
 
-The folder contains six HTML files, one `styles.css`, one `script.js`, six SVG images and this README. Navigation stays in each HTML page so the pages remain easy to read and explain. The first new commit is the static midterm baseline; the next adds JavaScript; the third adds jQuery and this guide.
+The folder contains six HTML files, one `styles.css`, one `script.js`, six SVG images and this README. Navigation stays in each HTML page so the pages remain easy to read and explain. The history contains the original midterm commit followed by eight logical updates: CDN cleanup; simplified static layout and SVG assets; dynamic menu; cart and pricing; form validation and checkout; demo tracking; jQuery interactions; documentation. All commits are associated with the repository owner, `xelllion`.
 
 ## Requirements map
 
