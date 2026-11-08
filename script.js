@@ -147,6 +147,36 @@ function renderCart() {
     }
 }
 
+function validateField(field) {
+    const value = field.value.trim();
+    let message = "";
+    if (field.type === "checkbox" && !field.checked) message = "Please confirm your order details.";
+    else if (field.required && !value) message = "Please complete this field.";
+    else if (field.minLength > 0 && value.length < field.minLength) message = `Enter at least ${field.minLength} characters.`;
+    else if (field.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) message = "Enter a valid email, such as name@example.com.";
+    else if (field.type === "tel" && !/^\d{11}$/.test(value.replace(/[+()\s-]/g, ""))) message = "Enter 11 digits, for example +7 777 123 45 67.";
+    field.classList.toggle("is-invalid", Boolean(message));
+    field.setAttribute("aria-invalid", String(Boolean(message)));
+    document.getElementById(field.id + "Error").textContent = message;
+    return !message;
+}
+
+function validateForm(form) {
+    let valid = true;
+    for (const field of form.querySelectorAll("input, select, textarea")) {
+        if (!validateField(field)) valid = false;
+    }
+    if (!valid) form.querySelector(".is-invalid").focus();
+    return valid;
+}
+
+function setupValidation(form) {
+    form.noValidate = true;
+    form.addEventListener("input", event => {
+        if (event.target.classList.contains("is-invalid")) validateField(event.target);
+    });
+}
+
 function setupCart() {
     const body = document.getElementById("cartBody");
     if (!body) return;
@@ -175,11 +205,53 @@ function setupCart() {
         document.getElementById("promoMessage").textContent = promo ? "PIZZA10 applied: 10% off food and drinks." : code ? "Unknown code. No discount applied; try PIZZA10." : "Promo code removed.";
         renderCart();
     });
+    const form = document.getElementById("checkoutForm");
+    setupValidation(form);
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        const valid = validateForm(form);
+        feedback.textContent = cart.length ? "" : "Your cart is empty. Add a dish from the menu first.";
+        if (!valid || !cart.length) return;
+        const order = {
+            id: "PG" + Date.now(),
+            createdAt: Date.now(),
+            total: calculateTotals().total,
+            items: cart,
+            name: document.getElementById("customerName").value.trim(),
+            address: document.getElementById("customerAddress").value.trim()
+        };
+        localStorage.setItem(orderKey, JSON.stringify(order));
+        cart = [];
+        promo = false;
+        localStorage.removeItem(promoKey);
+        saveCart();
+        renderCart();
+        form.reset();
+        promoInput.value = "";
+        document.getElementById("promoMessage").textContent = "";
+        const confirmation = document.getElementById("orderSuccess");
+        confirmation.hidden = false;
+        document.getElementById("orderNumber").textContent = order.id;
+        document.getElementById("trackLink").href = "tracking.html?order=" + order.id;
+        confirmation.focus();
+    });
     renderCart();
+}
+
+function setupContact() {
+    const form = document.getElementById("contactForm");
+    if (!form) return;
+    setupValidation(form);
+    form.addEventListener("input", () => { document.getElementById("contactSuccess").textContent = ""; });
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        document.getElementById("contactSuccess").textContent = validateForm(form) ? "Your message passed validation. This student demo does not send messages." : "";
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     setupMenu();
     setupCart();
+    setupContact();
 });
