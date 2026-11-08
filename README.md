@@ -23,7 +23,7 @@ No build, npm install, application server or database is needed. Internet access
 | Track order | Last saved order or PG1024; four stages over one minute |
 | Contact | Story, contact details, hours, validated message form, jQuery topic hints and FAQ |
 
-The folder contains six HTML files, one `styles.css`, one `script.js`, six SVG images and this README. Navigation stays in each HTML page so the pages remain easy to read and explain. The history contains the original midterm commit followed by eight logical updates: CDN cleanup; simplified static layout and SVG assets; dynamic menu; cart and pricing; form validation and checkout; demo tracking; jQuery interactions; documentation. All commits are associated with the repository owner, `xelllion`.
+The folder contains six HTML files, one `styles.css`, one `script.js`, six SVG images and this README. Navigation stays in each HTML page so the pages remain easy to read and explain. After the original midterm commit, the history separates CDN cleanup, simplified static layout and SVG assets, dynamic menu, cart and pricing, form validation and checkout, demo tracking, jQuery interactions, documentation and code explanations. All commits are associated with the repository owner, `xelllion`.
 
 ## Requirements map
 
@@ -44,8 +44,6 @@ The folder contains six HTML files, one `styles.css`, one `script.js`, six SVG i
 | Custom form validation | `validateField` and `validateForm`; field errors, `aria-invalid`, focus and success feedback |
 | jQuery selectors and traversal | `.faq-question`, `#contactTopic`, `closest`, `find` in `setupJQuery` |
 | jQuery events and effects | FAQ click/`slideToggle`; topic change/`fadeIn`; reduced-motion preference respected |
-
-Comments are intentionally omitted from the source at the project owner's request. This differs from the assignment's request for comments on non-obvious logic; explanations are here instead. Deployment and the individual defence remain separate assessment requirements.
 
 ## Rules and storage
 

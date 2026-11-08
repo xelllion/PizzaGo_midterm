@@ -1,3 +1,5 @@
+// Each product has an ID, name, category, image and prices in tenge.
+// Pizza prices follow sizes 25, 30 and 35 cm; other items have one price.
 const products = [
     { id: "pepperoni", name: "Pepperoni", category: "pizza", image: "pizza", prices: [2790, 3490, 4390] },
     { id: "margherita", name: "Margherita", category: "pizza", image: "pizza", prices: [2490, 2990, 3790] },
@@ -21,6 +23,7 @@ const promoKey = "pizzagoEndtermPromo";
 const orderKey = "pizzagoEndtermOrder";
 const demoKey = "pizzagoEndtermDemo";
 
+// Use the default value if saved data is missing or cannot be read as JSON.
 function readStorage(key, fallback) {
     try {
         return JSON.parse(localStorage.getItem(key)) ?? fallback;
@@ -29,9 +32,11 @@ function readStorage(key, fallback) {
     }
 }
 
+// Keep only known products, valid sizes and positive whole-number quantities.
 let cart = readStorage(cartKey, []);
 if (!Array.isArray(cart)) cart = [];
 cart = cart.filter(item => item && products.some(product => product.id === item.id && product.prices[item.sizeIndex]) && Number.isInteger(item.quantity) && item.quantity > 0);
+// The promo is active only when the saved value is true.
 let promo = readStorage(promoKey, false) === true;
 let trackingTimer;
 
@@ -48,12 +53,14 @@ function itemName(item) {
     return product.name + (product.category === "pizza" ? ` · ${sizes[item.sizeIndex]} cm` : "");
 }
 
+// The promo takes 10% off the items, before calculating delivery.
 function calculateTotals() {
     let subtotal = 0;
     for (const item of cart) {
         subtotal += getProduct(item.id).prices[item.sizeIndex] * item.quantity;
     }
     const discount = promo ? Math.round(subtotal * 0.1) : 0;
+    // Delivery costs 690 below 6,000 after discount; an empty cart has no delivery fee.
     const delivery = subtotal === 0 || subtotal - discount >= 6000 ? 0 : 690;
     return { subtotal, discount, delivery, total: subtotal - discount + delivery };
 }
@@ -70,6 +77,7 @@ function addToCart(id, sizeIndex) {
     saveCart();
 }
 
+// Apply search and category together, then rebuild the matching cards.
 function renderMenu() {
     const query = document.getElementById("searchInput").value.trim().toLowerCase();
     const category = document.getElementById("categoryFilter").value;
@@ -105,6 +113,7 @@ function setupMenu() {
     if (!list) return;
     document.getElementById("searchInput").addEventListener("input", renderMenu);
     document.getElementById("categoryFilter").addEventListener("change", renderMenu);
+    // Listen on the list so new cards work without a separate handler for each control.
     list.addEventListener("change", event => {
         const card = event.target.closest("article");
         card.querySelector(".price").textContent = money(getProduct(card.dataset.id).prices[event.target.value]);
@@ -112,6 +121,7 @@ function setupMenu() {
     });
     list.addEventListener("click", event => {
         if (!event.target.closest(".add-button")) return;
+        // closest() finds the card that contains the clicked button.
         const card = event.target.closest("article");
         const select = card.querySelector("select");
         const sizeIndex = select ? Number(select.value) : 0;
@@ -147,13 +157,16 @@ function renderCart() {
     }
 }
 
+// Check checkbox, required value, length, email and phone in order; show the first error.
 function validateField(field) {
     const value = field.value.trim();
     let message = "";
     if (field.type === "checkbox" && !field.checked) message = "Please confirm your order details.";
     else if (field.required && !value) message = "Please complete this field.";
     else if (field.minLength > 0 && value.length < field.minLength) message = `Enter at least ${field.minLength} characters.`;
+    // Email needs text before @ and a domain with a dot, with no spaces.
     else if (field.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) message = "Enter a valid email, such as name@example.com.";
+    // Remove +, spaces, parentheses and hyphens, then require exactly 11 digits.
     else if (field.type === "tel" && !/^\d{11}$/.test(value.replace(/[+()\s-]/g, ""))) message = "Enter 11 digits, for example +7 777 123 45 67.";
     field.classList.toggle("is-invalid", Boolean(message));
     field.setAttribute("aria-invalid", String(Boolean(message)));
@@ -181,6 +194,7 @@ function setupCart() {
     const body = document.getElementById("cartBody");
     if (!body) return;
     const feedback = document.getElementById("cartFeedback");
+    // data-action selects plus, minus or remove for the clicked cart row.
     body.addEventListener("click", event => {
         const button = event.target.closest("[data-action]");
         if (!button) return;
@@ -244,6 +258,7 @@ function showOrder(order) {
     document.getElementById("trackId").textContent = order.id;
     document.getElementById("trackDetails").textContent = `${order.address} · Total: ${money(order.total)}`;
     const update = () => {
+        // Move to the next stage every 20 seconds, keeping the index between 0 and 3.
         const stage = Math.min(3, Math.max(0, Math.floor((Date.now() - order.createdAt) / 20000)));
         document.getElementById("trackStatus").textContent = stages[stage];
         document.querySelectorAll("#trackStages li").forEach((item, index) => {
@@ -301,6 +316,7 @@ function setupContact() {
 }
 
 function setupJQuery() {
+    // Turn off jQuery animations when the user prefers reduced motion.
     $.fx.off = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     $(".faq-question").on("click", function () {
         const expanded = $(this).attr("aria-expanded") === "true";
@@ -322,6 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupJQuery();
 });
 
+// Reload pages restored from the browser cache to refresh the cart and tracking.
 window.addEventListener("pageshow", event => {
     if (event.persisted) location.reload();
 });
