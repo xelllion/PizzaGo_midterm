@@ -30,19 +30,40 @@
     </header>
     <main class="container py-5">
         <h1>Your cart</h1>
-        <p class="lead">A sample basket for the static midterm website.</p>
+        <p class="lead">Review your dishes and try the delivery form.</p>
+        <p class="small text-secondary">Student demo: no real orders or payments are processed.</p>
+        <div class="alert alert-success" id="orderSuccess" tabindex="-1" hidden>
+            <p>Demo order <strong id="orderNumber"></strong> confirmed.</p>
+            <a id="trackLink" href="tracking.html">Track your demo order</a>
+        </div>
+        <p id="cartFeedback" role="status"></p>
         <div class="row g-4">
             <section class="col-lg-7" aria-labelledby="basketTitle">
                 <h2 class="h4" id="basketTitle">Order summary</h2>
-                <div class="table-responsive">
+                <p id="emptyCart">Your cart is empty. <a href="menu.html">Choose a dish</a> to get started.</p>
+                <div class="table-responsive" id="cartTable" hidden>
                     <table class="table align-middle">
-                        <caption>Sample order</caption>
-                        <thead><tr><th scope="col">Item</th><th scope="col">Quantity</th><th scope="col">Price</th></tr></thead>
-                        <tbody><tr><td>Pepperoni · 30 cm</td><td>1</td><td>3,490 ₸</td></tr><tr><td>Cola 0.5 L</td><td>1</td><td>590 ₸</td></tr></tbody>
+                        <caption>Items in your cart</caption>
+                        <thead><tr><th scope="col">Item</th><th scope="col">Quantity</th><th scope="col">Total</th><th scope="col">Action</th></tr></thead>
+                        <tbody id="cartBody"></tbody>
                     </table>
                 </div>
-                <p>Delivery: 690 ₸ · <strong>Total: 4,770 ₸</strong></p>
-                <a href="menu.html">Continue browsing</a>
+                <form id="promoForm" class="my-4">
+                    <label class="form-label" for="promoInput">Promo code</label>
+                    <div class="input-group">
+                        <input class="form-control" id="promoInput" placeholder="PIZZA10" aria-describedby="promoMessage">
+                        <button class="btn btn-outline-dark" type="submit">Apply</button>
+                    </div>
+                    <p id="promoMessage" class="form-text" role="status"></p>
+                </form>
+                <dl class="row">
+                    <dt class="col-6">Subtotal</dt><dd class="col-6 text-end" id="subtotal">0 ₸</dd>
+                    <dt class="col-6">Discount</dt><dd class="col-6 text-end" id="discount">0 ₸</dd>
+                    <dt class="col-6">Delivery</dt><dd class="col-6 text-end" id="delivery">0 ₸</dd>
+                    <dt class="col-6">Total</dt><dd class="col-6 text-end fw-bold" id="total">0 ₸</dd>
+                </dl>
+                <p class="small">Delivery is 690 ₸, or free from 6,000 ₸ after discount.</p>
+                <a href="menu.html">Continue shopping</a>
             </section>
             <section class="col-lg-5" aria-label="Checkout">
                 <form id="checkoutForm" action="#checkoutForm">

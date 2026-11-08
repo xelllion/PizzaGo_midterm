@@ -122,7 +122,64 @@ function setupMenu() {
     renderMenu();
 }
 
+function renderCart() {
+    const body = document.getElementById("cartBody");
+    body.replaceChildren();
+    cart.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.dataset.index = index;
+        row.innerHTML = `
+            <th scope="row">${itemName(item)}</th>
+            <td><div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-dark btn-sm" type="button" data-action="minus" aria-label="Decrease ${itemName(item)}">−</button>
+                <span>${item.quantity}</span>
+                <button class="btn btn-outline-dark btn-sm" type="button" data-action="plus" aria-label="Increase ${itemName(item)}">+</button>
+            </div></td>
+            <td class="text-nowrap">${money(getProduct(item.id).prices[item.sizeIndex] * item.quantity)}</td>
+            <td><button class="btn btn-outline-danger btn-sm" type="button" data-action="remove" aria-label="Remove ${itemName(item)}">Remove</button></td>`;
+        body.append(row);
+    });
+    document.getElementById("emptyCart").hidden = cart.length > 0;
+    document.getElementById("cartTable").hidden = cart.length === 0;
+    const totals = calculateTotals();
+    for (const name of ["subtotal", "discount", "delivery", "total"]) {
+        document.getElementById(name).textContent = money(totals[name]);
+    }
+}
+
+function setupCart() {
+    const body = document.getElementById("cartBody");
+    if (!body) return;
+    const feedback = document.getElementById("cartFeedback");
+    body.addEventListener("click", event => {
+        const button = event.target.closest("[data-action]");
+        if (!button) return;
+        const row = button.closest("tr");
+        const index = Number(row.dataset.index);
+        cart[index].quantity += button.dataset.action === "plus" ? 1 : -1;
+        if (button.dataset.action === "remove" || cart[index].quantity === 0) {
+            cart.splice(index, 1);
+            row.remove();
+        }
+        saveCart();
+        renderCart();
+        feedback.textContent = "Cart updated.";
+    });
+    const promoInput = document.getElementById("promoInput");
+    if (promo) promoInput.value = "PIZZA10";
+    document.getElementById("promoForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const code = promoInput.value.trim().toUpperCase();
+        promo = code === "PIZZA10";
+        localStorage.setItem(promoKey, JSON.stringify(promo));
+        document.getElementById("promoMessage").textContent = promo ? "PIZZA10 applied: 10% off food and drinks." : code ? "Unknown code. No discount applied; try PIZZA10." : "Promo code removed.";
+        renderCart();
+    });
+    renderCart();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     setupMenu();
+    setupCart();
 });
