@@ -1,0 +1,17 @@
+warning: in the working copy of 'cart.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'contact.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'deals.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'menu.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'script.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'styles.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tracking.html', LF will be replaced by CRLF the next time Git touches it
+ cart.html     |  20 [32m++++++[m[31m---[m
+ contact.html  | 127 [32m++++++++++++++++++++++++++++++++++++++++++++[m[31m--------------[m
+ deals.html    |  14 [32m++++[m[31m---[m
+ index.html    |  20 [32m+++++[m[31m----[m
+ menu.html     |  14 [32m++++[m[31m---[m
+ script.js     |  76 [32m++++++++++++++++++++++++++[m[31m---------[m
+ styles.css    |  82 [32m++++++++++++++++++++++++++++++++++[m[31m---[m
+ tracking.html |  14 [32m++++[m[31m---[m
+ 8 files changed, 285 insertions(+), 82 deletions(-)

@@ -28,12 +28,15 @@
             </div>
         </nav>
     </header>
+
+
     <main class="container py-5">
         <h1>About &amp; contact</h1>
-        <p class="lead">Started in a dorm kitchen, now imagined for the whole city.</p>
         <p>PizzaGo is our student concept for a friendly pizza delivery service in Astana. Fresh dough, familiar toppings and straightforward ordering are at the heart of the idea.</p>
         <div class="row gx-4 gy-5 my-1">
+
             <section class="col-md-6" aria-label="Contact form">
+                <div class="content-panel h-100">
                 <form id="contactForm" action="#contactForm">
                     <h2 class="h4">Send a message</h2>
                     <p class="small text-secondary">Practice form: messages are not sent to a business.</p>
@@ -66,43 +69,109 @@
                     <button class="btn btn-primary" type="submit">Check message</button>
                     <p id="contactSuccess" class="text-success mt-3 mb-0" role="status"></p>
                 </form>
+                </div>
             </section>
+
             <section class="col-md-6" aria-labelledby="kitchenTitle">
-                <h2 class="h4" id="kitchenTitle">Our kitchen</h2>
-                <address>Astana, Mangilik El 10<br><a href="tel:+77077076767">+7 707 707 67 67</a><br><a href="mailto:hello@pizzago.kz">hello@pizzago.kz</a></address>
-                <p class="small text-secondary">Illustrative contact details for this student project.</p>
-                <table class="table">
-                    <caption>Kitchen &amp; delivery hours</caption>
-                    <thead><tr><th scope="col">Day</th><th scope="col">Hours</th></tr></thead>
-                    <tbody>
-                        <tr><th scope="row">Monday–Thursday</th><td>10:00–02:00</td></tr>
-                        <tr><th scope="row">Friday–Saturday</th><td>10:00–00:00</td></tr>
-                        <tr><th scope="row">Sunday</th><td>11:00–23:00</td></tr>
-                    </tbody>
-                </table>
-                <h2 class="h4 mt-4">Delivery questions</h2>
-                <div class="faq-item card p-3 mb-2">
-                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="deliveryAnswer">How much is delivery?</button></h3>
-                    <p class="faq-answer mt-2 mb-0" id="deliveryAnswer">690 ₸, or free when your subtotal after discount reaches 6,000 ₸.</p>
+                <div class="content-panel mb-4">
+                    <h2 class="h4" id="kitchenTitle">Our kitchen</h2>
+
+                    <address>
+                        Astana, Mangilik El 10<br>
+                        <a href="tel:+77077076767">+7 707 707 67 67</a><br>
+                        <a href="mailto:hello@pizzago.kz">hello@pizzago.kz</a>
+                    </address>
+
+                    <p class="small text-secondary">
+                        Illustrative contact details for this student project.
+                    </p>
+
+                    <table class="table">
+                        <caption>Kitchen &amp; delivery hours</caption>
+                        <thead>
+                        <tr>
+                            <th scope="col">Day</th>
+                            <th scope="col">Hours</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">Monday–Thursday</th>
+                            <td>10:00–02:00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Friday–Saturday</th>
+                            <td>10:00–00:00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Sunday</th>
+                            <td>11:00–23:00</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="faq-item card p-3 mb-2">
-                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="sizesAnswer">What pizza sizes are available?</button></h3>
-                    <p class="faq-answer mt-2 mb-0" id="sizesAnswer">Our pizzas come in 25, 30 and 35 cm sizes.</p>
+
+                <div class="content-panel">
+                    <h2 class="h4">Delivery questions</h2>
+
+                    <div class="faq-item card p-3 mb-2">
+                        <h3 class="h6 mb-0">
+                            <button class="faq-question btn p-0 text-start"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-controls="deliveryAnswer">
+                                How much is delivery?
+                            </button>
+                        </h3>
+                        <p class="faq-answer mt-2 mb-0" id="deliveryAnswer">
+                            690 ₸, or free when your subtotal after discount reaches 6,000 ₸.
+                        </p>
+                    </div>
+
+                    <div class="faq-item card p-3 mb-2">
+                        <h3 class="h6 mb-0">
+                            <button class="faq-question btn p-0 text-start"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-controls="sizesAnswer">
+                                What pizza sizes are available?
+                            </button>
+                        </h3>
+                        <p class="faq-answer mt-2 mb-0" id="sizesAnswer">
+                            Our pizzas come in 25, 30 and 35 cm sizes.
+                        </p>
+                    </div>
+
+                    <div class="faq-item card p-3">
+                        <h3 class="h6 mb-0">
+                            <button class="faq-question btn p-0 text-start"
+                                    type="button"
+                                    aria-expanded="false"
+                                    aria-controls="demoAnswer">
+                                Can I place a real order?
+                            </button>
+                        </h3>
+                        <p class="faq-answer mt-2 mb-0" id="demoAnswer">
+                            This is a student demonstration.
+                            No real orders, messages or payments are processed.
+                        </p>
+                    </div>
                 </div>
-                <div class="faq-item card p-3">
-                    <h3 class="h6 mb-0"><button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="demoAnswer">Can I place a real order?</button></h3>
-                    <p class="faq-answer mt-2 mb-0" id="demoAnswer">This is a student demonstration. No real orders, messages or payments are processed.</p>
-                </div>
+
             </section>
         </div>
     </main>
-    <footer class="site-footer py-4">
-        <div class="container footer-content">
-            <p class="mb-0">PizzaGo · Astana · Student project</p>
-            <a href="contact.html">Contact &amp; opening hours</a>
-            <small>Graphics: <a href="https://github.com/twitter/twemoji">Twemoji</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></small>
+
+    <footer class="site-footer">
+        <div>PizzaGo · Astana · Student project</div>
+        <a href="contact.html">Contact &amp; opening hours</a>
+        <div class="footer-names">
+            <span>Aruzhan Amerkhanova</span>
+            <span>Arai Uakyt</span>
+            <span>Sulukhan Aizharykova</span>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="script.js"></script>

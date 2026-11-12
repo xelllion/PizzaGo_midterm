@@ -38,12 +38,24 @@ a {
     color: #ffdb91;
 }
 
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.site-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    gap: 1rem;
+    gap: 20px;
+    padding: 20px 7%;
+    background-color: #2b140c;
+    color: white;
+    flex-shrink: 0;
+}
+
+.footer-names {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+    font-size: 12px;
+    gap: 4px;
 }
 
 .btn-primary {
@@ -101,12 +113,70 @@ a {
     object-fit: contain;
 }
 
+#trackTitle {
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
 .table {
     --bs-table-bg: transparent;
 }
 
 .faq-answer {
     display: none;
+}
+
+.content-panel {
+    background: #ffffff;
+    border: 1px solid #e6d4bc;
+    border-radius: 6px;
+    padding: 24px;
+}
+
+.content-panel h2 {
+    margin-bottom: 16px;
+}
+
+.content-panel .table {
+    margin-bottom: 0;
+}
+
+#total {
+    color: var(--tomato);
+    font-size: 1.2rem;
+}
+
+.faq-item {
+    background: #fff7ea;
+    border: 1px solid #e6d4bc;
+    border-radius: 6px;
+}
+
+.faq-question {
+    width: 100%;
+    color: #2a140c;
+    font-family: Georgia, serif;
+    font-size: 15px;
+}
+
+.faq-question:hover {
+    color: #b92e20;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.content-panel .form-control,
+.content-panel .form-select {
+    border-radius: 6px;
+}
+
+@media (max-width: 575.98px) {
+    .content-panel {
+        padding: 18px;
+    }
 }
 
 @media (max-width: 991.98px) {
