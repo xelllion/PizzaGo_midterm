@@ -106,7 +106,7 @@ X-Client-Id: browser-generated-id
 | `PATCH /api/reviews/:id` | `200` with the updated review | `400`, `403`, `404` |
 | `DELETE /api/reviews/:id` | `204` with no body | `400`, `403`, `404` |
 
-The public response never exposes stored owner IDs. Each review includes `canEdit: true` only for its owner browser. Request bodies are limited to 10 KB, all fields are validated again on the server, and JSON writes use a temporary file followed by rename.
+The public response never exposes stored owner IDs. Each review includes `canEdit: true` only for its owner browser. All fields are validated again on the server. The server reads the JSON array, changes it and saves it back with `fs.writeFile()`.
 
 ## What the JavaScript terms mean here
 
