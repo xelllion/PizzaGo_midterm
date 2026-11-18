@@ -51,21 +51,9 @@ function sendEmpty(response, status) {
 function readBody(request) {
     return new Promise((resolve, reject) => {
         let body = "";
-        let tooLarge = false;
         request.setEncoding("utf8");
-        request.on("data", chunk => {
-            if (tooLarge) return;
-            body += chunk;
-            if (Buffer.byteLength(body) > 10_000) {
-                tooLarge = true;
-                body = "";
-            }
-        });
+        request.on("data", chunk => { body += chunk; });
         request.on("end", () => {
-            if (tooLarge) {
-                reject(httpError(413, "Request body is too large."));
-                return;
-            }
             try {
                 resolve(body ? JSON.parse(body) : {});
             } catch {
@@ -116,9 +104,7 @@ function publicReview(review, clientId) {
 }
 
 function createReviewStore(dataFile) {
-    let queue = Promise.resolve();
-
-    async function readFile() {
+    async function read() {
         try {
             const data = JSON.parse(await fs.readFile(dataFile, "utf8"));
             return Array.isArray(data) ? data : [];
@@ -129,30 +115,12 @@ function createReviewStore(dataFile) {
         }
     }
 
-    async function writeFile(reviews) {
+    async function save(reviews) {
         await fs.mkdir(path.dirname(dataFile), { recursive: true });
-        const temporaryFile = `${dataFile}.${process.pid}.${Date.now()}.tmp`;
-        await fs.writeFile(temporaryFile, JSON.stringify(reviews, null, 2) + "\n", "utf8");
-        await fs.rename(temporaryFile, dataFile);
+        await fs.writeFile(dataFile, JSON.stringify(reviews, null, 2) + "\n", "utf8");
     }
 
-    async function list() {
-        await queue;
-        return readFile();
-    }
-
-    function change(mutator) {
-        const operation = queue.then(async () => {
-            const reviews = await readFile();
-            const result = mutator(reviews);
-            await writeFile(reviews);
-            return result;
-        });
-        queue = operation.catch(() => undefined);
-        return operation;
-    }
-
-    return { list, change };
+    return { read, save };
 }
 
 async function handleReviews(request, response, url, store) {
@@ -160,7 +128,7 @@ async function handleReviews(request, response, url, store) {
     const clientId = validateClientId(request.headers["x-client-id"]) ? request.headers["x-client-id"] : "";
 
     if (request.method === "GET" && url.pathname === "/api/reviews") {
-        const reviews = await store.list();
+        const reviews = await store.read();
         reviews.sort((first, second) => new Date(second.createdAt) - new Date(first.createdAt));
         sendJson(response, 200, { reviews: reviews.map(review => publicReview(review, clientId)) });
         return;
@@ -173,7 +141,9 @@ async function handleReviews(request, response, url, store) {
         if (Object.keys(errors).length) throw httpError(400, "Review validation failed.", errors);
         const now = new Date().toISOString();
         const review = { id: randomUUID(), ...value, ownerId, createdAt: now, updatedAt: now };
-        await store.change(items => items.push(review));
+        const reviews = await store.read();
+        reviews.push(review);
+        await store.save(reviews);
         sendJson(response, 201, { review: publicReview(review, ownerId) });
         return;
     }
@@ -181,27 +151,27 @@ async function handleReviews(request, response, url, store) {
     if (request.method === "PATCH" && match) {
         const ownerId = requireClientId(request);
         const input = await readBody(request);
-        const review = await store.change(items => {
-            const index = items.findIndex(item => item.id === match[1]);
-            if (index === -1) throw httpError(404, "Review not found.");
-            if (items[index].ownerId !== ownerId) throw httpError(403, "You can edit only reviews created in this browser.");
-            const { errors, value } = validateReview({ ...items[index], ...input });
-            if (Object.keys(errors).length) throw httpError(400, "Review validation failed.", errors);
-            items[index] = { ...items[index], ...value, updatedAt: new Date().toISOString() };
-            return items[index];
-        });
+        const reviews = await store.read();
+        const index = reviews.findIndex(review => review.id === match[1]);
+        if (index === -1) throw httpError(404, "Review not found.");
+        if (reviews[index].ownerId !== ownerId) throw httpError(403, "You can edit only reviews created in this browser.");
+        const { errors, value } = validateReview({ ...reviews[index], ...input });
+        if (Object.keys(errors).length) throw httpError(400, "Review validation failed.", errors);
+        const review = { ...reviews[index], ...value, updatedAt: new Date().toISOString() };
+        reviews[index] = review;
+        await store.save(reviews);
         sendJson(response, 200, { review: publicReview(review, ownerId) });
         return;
     }
 
     if (request.method === "DELETE" && match) {
         const ownerId = requireClientId(request);
-        await store.change(items => {
-            const index = items.findIndex(item => item.id === match[1]);
-            if (index === -1) throw httpError(404, "Review not found.");
-            if (items[index].ownerId !== ownerId) throw httpError(403, "You can delete only reviews created in this browser.");
-            items.splice(index, 1);
-        });
+        const reviews = await store.read();
+        const index = reviews.findIndex(review => review.id === match[1]);
+        if (index === -1) throw httpError(404, "Review not found.");
+        if (reviews[index].ownerId !== ownerId) throw httpError(403, "You can delete only reviews created in this browser.");
+        reviews.splice(index, 1);
+        await store.save(reviews);
         sendEmpty(response, 204);
         return;
     }

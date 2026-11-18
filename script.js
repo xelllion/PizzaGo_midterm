@@ -239,9 +239,8 @@ function setupRecipes() {
 
 function getReviewClientId() {
     let clientId = localStorage.getItem(reviewClientKey);
-    if (!clientId || clientId.length < 8 || clientId.length > 100 || !/^[a-zA-Z0-9-]+$/.test(clientId)) {
-        const randomPart = globalThis.crypto && typeof globalThis.crypto.randomUUID === "function" ? globalThis.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-        clientId = `browser-${randomPart}`;
+    if (!clientId) {
+        clientId = `browser-${crypto.randomUUID()}`;
         localStorage.setItem(reviewClientKey, clientId);
     }
     return clientId;
