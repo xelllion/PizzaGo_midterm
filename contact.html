@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="styles.css" rel="stylesheet">
 </head>
+
 <body>
     <header class="site-header">
         <nav class="navbar navbar-expand-lg" data-bs-theme="dark" aria-label="Main navigation">
@@ -17,12 +19,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="mainNav">
                     <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="deals.html">Deals</a></li>
-                    <li class="nav-item"><a class="nav-link" href="cart.html">Cart <span id="cartCount" class="badge text-bg-warning"></span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="tracking.html">Track order</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="contact.html" aria-current="page">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="deals.html">Deals</a></li>
+                        <li class="nav-item"><a class="nav-link" href="cart.html">Cart <span id="cartCount" class="badge text-bg-warning"></span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="tracking.html">Track order</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contact.html" aria-current="page">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -37,38 +39,38 @@
 
             <section class="col-md-6" aria-label="Contact form">
                 <div class="content-panel h-100">
-                <form id="contactForm" action="#contactForm">
-                    <h2 class="h4">Send a message</h2>
-                    <p class="small text-secondary">Practice form: messages are not sent to a business.</p>
-                    <div class="mb-3">
-                        <label class="form-label" for="contactName">Name</label>
-                        <input class="form-control" id="contactName" name="contactName" type="text" required minlength="2" autocomplete="name" aria-describedby="contactNameError">
-                        <div class="invalid-feedback" id="contactNameError"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="contactEmail">Email</label>
-                        <input class="form-control" id="contactEmail" name="contactEmail" type="email" required autocomplete="email" aria-describedby="contactEmailError">
-                        <div class="invalid-feedback" id="contactEmailError"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="contactTopic">Topic</label>
-                        <select class="form-select" id="contactTopic" name="contactTopic" required aria-describedby="contactTopicError topicHelp">
-                            <option value="">Choose a topic</option>
-                            <option value="order" data-help="Include your order number so we can understand your question.">Order question</option>
-                            <option value="feedback" data-help="Tell us which dish you tried and what could be better.">Feedback</option>
-                            <option value="catering" data-help="Mention the date and number of guests.">Catering</option>
-                        </select>
-                        <div class="invalid-feedback" id="contactTopicError"></div>
-                        <p class="form-text mb-0" id="topicHelp" aria-live="polite"></p>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="contactMessage">Message</label>
-                        <textarea class="form-control" id="contactMessage" name="contactMessage" rows="4" required minlength="10" aria-describedby="contactMessageError"></textarea>
-                        <div class="invalid-feedback" id="contactMessageError"></div>
-                    </div>
-                    <button class="btn btn-primary" type="submit">Check message</button>
-                    <p id="contactSuccess" class="text-success mt-3 mb-0" role="status"></p>
-                </form>
+                    <form id="contactForm" action="#contactForm">
+                        <h2 class="h4">Send a message</h2>
+                        <p class="small text-secondary">Practice form: messages are not sent to a business.</p>
+                        <div class="mb-3">
+                            <label class="form-label" for="contactName">Name</label>
+                            <input class="form-control" id="contactName" name="contactName" type="text" required minlength="2" autocomplete="name" aria-describedby="contactNameError">
+                            <div class="invalid-feedback" id="contactNameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contactEmail">Email</label>
+                            <input class="form-control" id="contactEmail" name="contactEmail" type="email" required autocomplete="email" aria-describedby="contactEmailError">
+                            <div class="invalid-feedback" id="contactEmailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contactTopic">Topic</label>
+                            <select class="form-select" id="contactTopic" name="contactTopic" required aria-describedby="contactTopicError topicHelp">
+                                <option value="">Choose a topic</option>
+                                <option value="order" data-help="Include your order number so we can understand your question.">Order question</option>
+                                <option value="feedback" data-help="Tell us which dish you tried and what could be better.">Feedback</option>
+                                <option value="catering" data-help="Mention the date and number of guests.">Catering</option>
+                            </select>
+                            <div class="invalid-feedback" id="contactTopicError"></div>
+                            <p class="form-text mb-0" id="topicHelp" aria-live="polite"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contactMessage">Message</label>
+                            <textarea class="form-control" id="contactMessage" name="contactMessage" rows="4" required minlength="10" aria-describedby="contactMessageError"></textarea>
+                            <div class="invalid-feedback" id="contactMessageError"></div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Check message</button>
+                        <p id="contactSuccess" class="text-success mt-3 mb-0" role="status"></p>
+                    </form>
                 </div>
             </section>
 
@@ -78,7 +80,7 @@
 
                     <address>
                         Astana, Mangilik El 10<br>
-                        <a href="tel:+77077076767">+7 707 707 67 67</a><br>
+                        <a href="tel:+77077076767">+7&nbsp;707&nbsp;707&nbsp;67&nbsp;67</a><br>
                         <a href="mailto:hello@pizzago.kz">hello@pizzago.kz</a>
                     </address>
 
@@ -89,24 +91,24 @@
                     <table class="table">
                         <caption>Kitchen &amp; delivery hours</caption>
                         <thead>
-                        <tr>
-                            <th scope="col">Day</th>
-                            <th scope="col">Hours</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">Day</th>
+                                <th scope="col">Hours</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">Monday–Thursday</th>
-                            <td>10:00–02:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Friday–Saturday</th>
-                            <td>10:00–00:00</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Sunday</th>
-                            <td>11:00–23:00</td>
-                        </tr>
+                            <tr>
+                                <th scope="row">Monday–Thursday</th>
+                                <td>10:00–02:00</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Friday–Saturday</th>
+                                <td>10:00–00:00</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sunday</th>
+                                <td>11:00–23:00</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -116,10 +118,7 @@
 
                     <div class="faq-item card p-3 mb-2">
                         <h3 class="h6 mb-0">
-                            <button class="faq-question btn p-0 text-start"
-                                    type="button"
-                                    aria-expanded="false"
-                                    aria-controls="deliveryAnswer">
+                            <button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="deliveryAnswer">
                                 How much is delivery?
                             </button>
                         </h3>
@@ -130,10 +129,7 @@
 
                     <div class="faq-item card p-3 mb-2">
                         <h3 class="h6 mb-0">
-                            <button class="faq-question btn p-0 text-start"
-                                    type="button"
-                                    aria-expanded="false"
-                                    aria-controls="sizesAnswer">
+                            <button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="sizesAnswer">
                                 What pizza sizes are available?
                             </button>
                         </h3>
@@ -144,10 +140,7 @@
 
                     <div class="faq-item card p-3">
                         <h3 class="h6 mb-0">
-                            <button class="faq-question btn p-0 text-start"
-                                    type="button"
-                                    aria-expanded="false"
-                                    aria-controls="demoAnswer">
+                            <button class="faq-question btn p-0 text-start" type="button" aria-expanded="false" aria-controls="demoAnswer">
                                 Can I place a real order?
                             </button>
                         </h3>
@@ -176,4 +169,5 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
