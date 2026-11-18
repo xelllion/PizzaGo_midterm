@@ -1,18 +1,38 @@
+class Product {
+    constructor(id, name, category, image, prices) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.image = image;
+        this.prices = prices;
+    }
+
+    get displayPrice() {
+        return this.prices[this.category === "pizza" ? 1 : 0];
+    }
+
+    matchesFilters(query, category, maximumPrice) {
+        const matchesName = this.name.toLowerCase().includes(query);
+        const matchesCategory = category === "all" || this.category === category;
+        return matchesName && matchesCategory && this.displayPrice <= maximumPrice;
+    }
+}
+
 const products = [
-    { id: "pepperoni", name: "Pepperoni", category: "pizza", image: "pizza", prices: [2790, 3490, 4390] },
-    { id: "margherita", name: "Margherita", category: "pizza", image: "pizza", prices: [2490, 2990, 3790] },
-    { id: "bbq", name: "BBQ Chicken", category: "pizza", image: "pizza", prices: [3090, 3790, 4690] },
-    { id: "cheese", name: "Four Cheese", category: "pizza", image: "pizza", prices: [3090, 3590, 4490] },
-    { id: "veggie", name: "Garden Veggie", category: "pizza", image: "pizza", prices: [2790, 3290, 4190] },
-    { id: "diavola", name: "Diavola", category: "pizza", image: "pizza", prices: [3190, 3690, 4590] },
-    { id: "mushroom", name: "Truffle Mushroom", category: "pizza", image: "pizza", prices: [3290, 3890, 4790] },
-    { id: "meat", name: "Meat Feast", category: "pizza", image: "pizza", prices: [3390, 3990, 4990] },
-    { id: "garlic", name: "Garlic Knots", category: "snacks", image: "bread", prices: [1290] },
-    { id: "wings", name: "Spicy Wings", category: "snacks", image: "chicken", prices: [1990] },
-    { id: "cola", name: "Cola 0.5 L", category: "drinks", image: "drink", prices: [590] },
-    { id: "lemonade", name: "Mint Lemonade", category: "drinks", image: "drink", prices: [890] },
-    { id: "cheesecake", name: "Strawberry Cheesecake", category: "desserts", image: "cake", prices: [1390] },
-    { id: "brownie", name: "Brownie & Ice Cream", category: "desserts", image: "chocolate", prices: [1490] }
+    new Product("pepperoni", "Pepperoni", "pizza", "pizza", [2790, 3490, 4390]),
+    new Product("margherita", "Margherita", "pizza", "pizza", [2490, 2990, 3790]),
+    new Product("bbq", "BBQ Chicken", "pizza", "pizza", [3090, 3790, 4690]),
+    new Product("cheese", "Four Cheese", "pizza", "pizza", [3090, 3590, 4490]),
+    new Product("veggie", "Garden Veggie", "pizza", "pizza", [2790, 3290, 4190]),
+    new Product("diavola", "Diavola", "pizza", "pizza", [3190, 3690, 4590]),
+    new Product("mushroom", "Truffle Mushroom", "pizza", "pizza", [3290, 3890, 4790]),
+    new Product("meat", "Meat Feast", "pizza", "pizza", [3390, 3990, 4990]),
+    new Product("garlic", "Garlic Knots", "snacks", "bread", [1290]),
+    new Product("wings", "Spicy Wings", "snacks", "chicken", [1990]),
+    new Product("cola", "Cola 0.5 L", "drinks", "drink", [590]),
+    new Product("lemonade", "Mint Lemonade", "drinks", "drink", [890]),
+    new Product("cheesecake", "Strawberry Cheesecake", "desserts", "cake", [1390]),
+    new Product("brownie", "Brownie & Ice Cream", "desserts", "chocolate", [1490])
 ];
 
 const sizes = [25, 30, 35];
@@ -22,6 +42,8 @@ const promoKey = "pizzagoEndtermPromo";
 const orderKey = "pizzagoEndtermOrder";
 const demoKey = "pizzagoEndtermDemo";
 const reviewClientKey = "pizzagoReviewClient";
+const localReviewKey = "pizzagoLocalReviews";
+const favoriteKey = "pizzagoFavoriteProducts";
 const mealApiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=pizza";
 
 function readStorage(key, fallback) {
@@ -42,6 +64,8 @@ cart = cart.filter(item => {
 let promo = readStorage(promoKey, false) === true;
 let trackingTimer;
 let reviews = [];
+let reviewsUseLocalStorage = typeof location !== "undefined" && location.hostname.endsWith("github.io");
+let favorites = new Set(readStorage(favoriteKey, []).filter(id => products.some(product => product.id === id)));
 
 function money(amount) {
     return Math.round(amount).toLocaleString("en-US") + " ₸";
@@ -49,10 +73,6 @@ function money(amount) {
 
 function getProduct(id) {
     return products.find(product => product.id === id);
-}
-
-function getDisplayPrice(product) {
-    return product.prices[product.category === "pizza" ? 1 : 0];
 }
 
 function itemName(item) {
@@ -83,20 +103,27 @@ function addToCart(id, sizeIndex) {
     saveCart();
 }
 
-function filterAndSortProducts(query, category, maxPrice, sortValue) {
+function filterAndSortProducts(query, category, maxPrice, sortValue, favoriteIds = favorites, favoritesOnly = false) {
     const normalizedQuery = String(query || "").trim().toLowerCase();
     const parsedLimit = maxPrice === "" || maxPrice === null ? Infinity : Number(maxPrice);
     const priceLimit = Number.isFinite(parsedLimit) && parsedLimit >= 0 ? parsedLimit : Infinity;
-    const matches = products.filter(product => {
-        const matchesName = product.name.toLowerCase().includes(normalizedQuery);
-        const matchesCategory = category === "all" || product.category === category;
-        return matchesName && matchesCategory && getDisplayPrice(product) <= priceLimit;
-    });
+    const favoriteSet = favoriteIds instanceof Set ? favoriteIds : new Set(favoriteIds);
+    const matches = products.filter(product => product.matchesFilters(normalizedQuery, category, priceLimit) && (!favoritesOnly || favoriteSet.has(product.id)));
 
-    if (sortValue === "price-asc") matches.sort((first, second) => getDisplayPrice(first) - getDisplayPrice(second));
-    if (sortValue === "price-desc") matches.sort((first, second) => getDisplayPrice(second) - getDisplayPrice(first));
+    if (sortValue === "price-asc") matches.sort((first, second) => first.displayPrice - second.displayPrice);
+    if (sortValue === "price-desc") matches.sort((first, second) => second.displayPrice - first.displayPrice);
     if (sortValue === "name-asc") matches.sort((first, second) => first.name.localeCompare(second.name));
     return matches;
+}
+
+function saveFavorites() {
+    localStorage.setItem(favoriteKey, JSON.stringify([...favorites]));
+}
+
+function toggleFavorite(id) {
+    if (favorites.has(id)) favorites.delete(id);
+    else favorites.add(id);
+    saveFavorites();
 }
 
 function createProductCard(product) {
@@ -112,9 +139,14 @@ function createProductCard(product) {
         <div class="card h-100 p-3">
             <img class="product-image" src="images/${product.image}.svg" alt="${product.category} illustration">
             <div class="card-body px-0 pb-0 d-flex flex-column">
-                <h2 class="h5">${product.name}</h2>
+                <div class="product-title-row">
+                    <h2 class="h5 mb-0">${product.name}</h2>
+                    <button class="favorite-button" type="button" aria-label="${favorites.has(product.id) ? "Remove" : "Add"} ${product.name} ${favorites.has(product.id) ? "from" : "to"} favorites" aria-pressed="${favorites.has(product.id)}">
+                        <span aria-hidden="true">${favorites.has(product.id) ? "♥" : "♡"}</span>
+                    </button>
+                </div>
                 ${sizeControl}
-                <p class="price fw-bold mt-auto">${money(getDisplayPrice(product))}</p>
+                <p class="price fw-bold mt-auto">${money(product.displayPrice)}</p>
                 <button class="btn btn-primary add-button" type="button" aria-label="Add ${product.name} to cart">Add to cart</button>
             </div>
         </div>`;
@@ -126,11 +158,13 @@ function renderMenu() {
     const category = document.getElementById("categoryFilter");
     const maxPrice = document.getElementById("maxPriceFilter");
     const sort = document.getElementById("sortSelect");
+    const favoritesOnly = document.getElementById("favoritesOnly");
     const list = document.getElementById("productList");
-    if (!search || !category || !maxPrice || !sort || !list) return;
-    const matches = filterAndSortProducts(search.value, category.value, maxPrice.value, sort.value);
+    if (!search || !category || !maxPrice || !sort || !favoritesOnly || !list) return;
+    const matches = filterAndSortProducts(search.value, category.value, maxPrice.value, sort.value, favorites, favoritesOnly.checked);
     list.replaceChildren(...matches.map(createProductCard));
     document.getElementById("menuCount").textContent = matches.length ? `${matches.length} items found` : "No dishes match all selected filters.";
+    document.getElementById("favoriteCount").textContent = favorites.size;
 }
 
 function setupMenu() {
@@ -140,6 +174,7 @@ function setupMenu() {
     document.getElementById("categoryFilter").addEventListener("change", renderMenu);
     document.getElementById("maxPriceFilter").addEventListener("input", renderMenu);
     document.getElementById("sortSelect").addEventListener("change", renderMenu);
+    document.getElementById("favoritesOnly").addEventListener("change", renderMenu);
     list.addEventListener("change", event => {
         const card = event.target.closest("article");
         if (!card || event.target.tagName !== "SELECT") return;
@@ -147,8 +182,16 @@ function setupMenu() {
         card.querySelector(".add-button").textContent = "Add to cart";
     });
     list.addEventListener("click", event => {
-        if (!event.target.closest(".add-button")) return;
         const card = event.target.closest("article");
+        const favoriteButton = event.target.closest(".favorite-button");
+        if (favoriteButton) {
+            const product = getProduct(card.dataset.id);
+            toggleFavorite(product.id);
+            document.getElementById("menuFeedback").textContent = favorites.has(product.id) ? `${product.name} added to favorites.` : `${product.name} removed from favorites.`;
+            renderMenu();
+            return;
+        }
+        if (!event.target.closest(".add-button")) return;
         const select = card.querySelector("select");
         const sizeIndex = select ? Number(select.value) : 0;
         addToCart(card.dataset.id, sizeIndex);
@@ -246,7 +289,57 @@ function getReviewClientId() {
     return clientId;
 }
 
+function localReviewRequest(path = "", options = {}) {
+    const method = options.method || "GET";
+    const savedReviews = readStorage(localReviewKey, []);
+    const localReviews = Array.isArray(savedReviews) ? savedReviews : [];
+    const id = path.startsWith("/") ? path.slice(1) : "";
+
+    if (method === "GET") {
+        const sortedReviews = [...localReviews].sort((first, second) => new Date(second.createdAt) - new Date(first.createdAt));
+        return { reviews: sortedReviews.map(review => ({ ...review, canEdit: true })) };
+    }
+
+    if (method === "DELETE") {
+        const index = localReviews.findIndex(review => review.id === id);
+        if (index === -1) throw new Error("Review not found.");
+        localReviews.splice(index, 1);
+        localStorage.setItem(localReviewKey, JSON.stringify(localReviews));
+        return null;
+    }
+
+    const input = options.body ? JSON.parse(options.body) : {};
+    const current = method === "PATCH" ? localReviews.find(review => review.id === id) : null;
+    if (method === "PATCH" && !current) throw new Error("Review not found.");
+    const reviewData = current ? { ...current, ...input } : input;
+    const errors = validateReviewData(reviewData);
+    if (Object.keys(errors).length) {
+        const error = new Error("Review validation failed.");
+        error.errors = errors;
+        throw error;
+    }
+
+    const now = new Date().toISOString();
+    if (method === "POST") {
+        const review = { id: crypto.randomUUID(), ...reviewData, createdAt: now, updatedAt: now };
+        localReviews.push(review);
+        localStorage.setItem(localReviewKey, JSON.stringify(localReviews));
+        return { review: { ...review, canEdit: true } };
+    }
+
+    if (method === "PATCH") {
+        const index = localReviews.findIndex(review => review.id === id);
+        const review = { ...current, ...reviewData, updatedAt: now };
+        localReviews[index] = review;
+        localStorage.setItem(localReviewKey, JSON.stringify(localReviews));
+        return { review: { ...review, canEdit: true } };
+    }
+
+    throw new Error("Unsupported review action.");
+}
+
 async function reviewRequest(path = "", options = {}) {
+    if (reviewsUseLocalStorage) return localReviewRequest(path, options);
     const headers = { Accept: "application/json", "X-Client-Id": getReviewClientId(), ...(options.headers || {}) };
     if (options.body) headers["Content-Type"] = "application/json";
     const response = await fetch(`/api/reviews${path}`, { ...options, headers });
@@ -419,6 +512,12 @@ function renderReviews() {
     document.getElementById("reviewListStatus").textContent = reviews.length ? `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}` : "No reviews yet. Be the first to add one.";
 }
 
+function updateReviewStorageMode() {
+    const output = document.getElementById("reviewStorageMode");
+    if (!output) return;
+    output.textContent = reviewsUseLocalStorage ? "Browser mode: reviews are saved in localStorage on this device." : "Server mode: reviews are saved in data/reviews.json.";
+}
+
 async function loadReviews() {
     const status = document.getElementById("reviewListStatus");
     const retry = document.getElementById("reviewRetryButton");
@@ -429,6 +528,7 @@ async function loadReviews() {
     try {
         const data = await reviewRequest();
         reviews = Array.isArray(data.reviews) ? data.reviews : [];
+        updateReviewStorageMode();
         renderReviews();
     } catch {
         reviews = [];

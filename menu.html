@@ -64,6 +64,10 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-check mt-3">
+                    <input class="form-check-input" id="favoritesOnly" type="checkbox" aria-controls="productList">
+                    <label class="form-check-label" for="favoritesOnly">Show favorites only (<span id="favoriteCount">0</span>)</label>
+                </div>
             </div>
             <p id="menuCount" class="text-secondary" role="status"></p>
             <p id="menuFeedback" class="text-success" role="status"></p>
@@ -86,9 +90,10 @@
         <section class="page-section" aria-labelledby="reviewsTitle">
             <div class="section-heading">
                 <div>
-                    <p class="eyebrow mb-1">PizzaGo REST API</p>
+                    <p class="eyebrow mb-1">Reviews CRUD</p>
                     <h2 id="reviewsTitle">Customer reviews</h2>
                     <p class="mb-0">Create a review and manage reviews added from this browser.</p>
+                    <p class="small text-secondary mb-0" id="reviewStorageMode" role="status"></p>
                 </div>
                 <button class="btn btn-outline-dark" id="reviewRetryButton" type="button" hidden>Reload reviews</button>
             </div>

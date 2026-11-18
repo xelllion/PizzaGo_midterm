@@ -132,6 +132,31 @@ textarea:focus-visible {
     object-fit: contain;
 }
 
+.product-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.favorite-button {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0;
+    border: 1px solid var(--sand);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--tomato);
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.favorite-button:hover,
+.favorite-button[aria-pressed="true"] {
+    background: #ffe4ad;
+}
+
 #trackTitle {
     font-family: Arial, sans-serif;
     font-size: 23px;

@@ -23,8 +23,21 @@ test("all pages have unique IDs and valid local links and assets", async () => {
     }
 });
 
+test("every static button has an explicit type and accessible name", async () => {
+    for (const page of pages) {
+        const html = await fs.readFile(path.join(root, page), "utf8");
+        const buttons = html.match(/<button\b[\s\S]*?<\/button>/g) || [];
+        for (const button of buttons) {
+            assert.match(button, /\btype="(?:button|submit)"/, `${page} contains a button without an explicit type`);
+            const visibleText = button.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+            assert.ok(visibleText || /\baria-label="[^"]+"/.test(button), `${page} contains a button without an accessible name`);
+        }
+    }
+});
+
 test("the menu keeps all 14 original PizzaGo products", async () => {
     const script = await fs.readFile(path.join(root, "script.js"), "utf8");
     const productBlock = script.slice(script.indexOf("const products"), script.indexOf("const sizes"));
-    assert.equal((productBlock.match(/\bid: "/g) || []).length, 14);
+    assert.equal((productBlock.match(/new Product\(/g) || []).length, 14);
+    assert.match(script, /class Product/);
 });

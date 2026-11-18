@@ -2,7 +2,7 @@
 
 **Group:** Aruzhan Amerkhanova, Arai Uakyt, Sulukhan Aizharykova · SE-2529
 
-PizzaGo is a student pizza delivery website for Astana. The final version keeps the original six pages and all 14 dishes, then adds a small Node.js reviews API, an advanced review form, combined menu filtering and live recipe inspiration from TheMealDB.
+PizzaGo is a student pizza delivery website for Astana. The final version keeps the original six pages and all 14 dishes, then adds a small Node.js reviews API, an advanced review form, a `Product` class, favorites, combined menu filtering and live recipe inspiration from TheMealDB.
 
 The project uses plain HTML, CSS, JavaScript and Node.js. It has no framework, database, build step or npm dependencies. Orders, messages and payments remain demonstrations only.
 
@@ -24,27 +24,27 @@ There is no need to run `npm install` because the server and tests use only buil
 
 ### Why double-click and Live Server are not enough
 
-Opening an HTML file directly or using Live Server serves only static browser files. It cannot execute `server.js`, handle `/api/reviews`, or write reviews to `data/reviews.json`. The menu, cart and `localStorage` may still appear to work, but review requests will fail. Use `npm start` and `http://localhost:3000` for the complete project.
+Opening an HTML file directly or using Live Server serves only browser files. It cannot execute `server.js`, handle `/api/reviews`, or write reviews to `data/reviews.json`. GitHub Pages therefore uses a specific browser `localStorage` mode. Use `npm start` and `http://localhost:3000` to demonstrate the required Node.js REST API.
 
 ## Links
 
 - Repository: [github.com/xelllion/PizzaGo_midterm](https://github.com/xelllion/PizzaGo_midterm)
 - Static GitHub Pages preview: [xelllion.github.io/PizzaGo_midterm](https://xelllion.github.io/PizzaGo_midterm/)
 
-GitHub Pages cannot run Node.js or save a JSON file. It remains useful as a static preview, while the complete reviews feature requires `npm start` or deployment to a Node.js host with persistent storage. No full server-hosting link is claimed in this README.
+GitHub Pages cannot run Node.js or save a server JSON file. On Pages, review Create/Read/Update/Delete remains functional through a clearly labelled `localStorage` fallback. With `npm start`, the same interface uses the required Node.js API and `data/reviews.json`.
 
 ## Pages and retained features
 
 | Page | Features |
 | --- | --- |
 | Home | PizzaGo introduction, ordering steps and PIZZA10 offer |
-| Menu | 14 dishes, three pizza sizes, cart buttons, search, category, maximum price, sorting, TheMealDB recipes and reviews |
+| Menu | 14 dishes, three pizza sizes, favorites, cart buttons, search, category, maximum price, sorting, TheMealDB recipes and reviews |
 | Deals | Promo and delivery rules |
 | Cart | Quantity controls, removal, PIZZA10, totals and validated demo checkout |
 | Track order | Saved checkout order or PG1024 with four timed stages |
 | Contact | Story, details, opening hours, validated form, jQuery topic hints and FAQ |
 
-The cart and demo order use `localStorage`, so they survive a page refresh in the same browser. Review records use the server JSON file, so they survive a page refresh and a server restart.
+The cart, favorites and demo order use `localStorage`, so they survive a page refresh in the same browser. Review records use the server JSON file under `npm start`; GitHub Pages stores its separate review list in the current browser.
 
 ## Final-project features
 
@@ -59,7 +59,17 @@ Customer reviews support all four operations in the interface:
 
 The browser keeps a random client ID in `localStorage`. The server stores that owner ID with a review and shows Edit/Delete only in the browser that created it. This is a simple student-project ownership mechanism, not user authentication.
 
-### 2. Advanced form
+On GitHub Pages, the same CRUD buttons use a local review array saved with `JSON.stringify()` in `localStorage`. The page shows which storage mode is active, so the fallback does not pretend to be the server API.
+
+### 2. Object-oriented products
+
+Every menu item is an instance of the `Product` class. Its constructor stores the product data, the `displayPrice` getter selects the standard menu price, and `matchesFilters()` checks search, category and maximum price. This is the required OOP example without adding a framework or unnecessary inheritance.
+
+### 3. Favorites
+
+The heart button adds or removes a dish from favorites. Favorite product IDs are saved in `localStorage`, and **Show favorites only** works together with search, category, maximum price and sorting.
+
+### 4. Advanced form
 
 The same review form creates and edits records. It has custom client and server validation for name, dish, rating and review text. Choosing a pizza reveals a required 25/30/35 cm field; choosing a snack, drink or dessert hides it. The review textarea has a live 300-character counter.
 
@@ -112,7 +122,7 @@ The public response never exposes stored owner IDs. Each review includes `canEdi
 
 - `JSON.stringify(value)` converts the cart, promo state and request body into JSON text.
 - `JSON.parse(text)` converts stored JSON text back into a JavaScript value.
-- `localStorage` keeps the cart, promo, demo order and review browser ID on one device.
+- `localStorage` keeps the cart, promo, favorites, demo order, review browser ID and Pages review fallback on one device.
 - AJAX means sending an HTTP request without reloading the page. This project uses the modern `fetch()` API instead of `$.ajax()`.
 - `GET` reads reviews.
 - `POST` creates a review.
@@ -133,37 +143,38 @@ The public response never exposes stored owner IDs. Each review includes `canEdi
 
 ## Tests
 
-Run the local automated tests:
+Run every automated test, including the live TheMealDB request:
 
 ```bash
 npm test
 ```
 
-Run the real external API check separately:
+Run only the local project tests without an internet request:
+
+```bash
+npm run test:local
+```
+
+Run only the external API check:
 
 ```bash
 npm run test:external
 ```
 
-Run everything:
-
-```bash
-npm run test:all
-```
-
-The automated suite checks combined search/filter/sorting, advanced-form validation, safe `localStorage` parsing, all page links and duplicate IDs, all 14 products, static-file serving, server validation, ownership, GET/POST/PATCH/DELETE and persistence after a server restart. The external test makes a real HTTPS request to TheMealDB and therefore needs internet access.
+The default suite checks the `Product` class, combined search/filter/sorting/favorites, advanced-form validation, safe `localStorage` parsing, Pages review CRUD, all page links and duplicate IDs, all 14 products, static-file serving, server validation, ownership, API GET/POST/PATCH/DELETE, persistence after a server restart and a real HTTPS response from TheMealDB. `npm test` therefore needs internet access.
 
 ## Manual defence walkthrough
 
 1. Run `npm start` and open all six navigation links.
 2. On Menu, search `e`, choose Pizza, enter maximum price `3500`, then sort price high-to-low. The result is Pepperoni, Garden Veggie and Margherita.
-3. Change Pepperoni between 25/30/35 cm and add two different sizes to the cart.
-4. Apply PIZZA10, change quantities, refresh and confirm the same totals remain.
-5. Submit empty checkout and contact forms, then correct the highlighted fields.
-6. Place a demo order and open its tracking link. PG1024 also works without checkout.
-7. Wait for Pizza Inspiration to show three live recipes, then explain its loading, retry and empty handling.
-8. Submit an empty review form, select pizza to reveal size, publish a valid review, edit it, refresh the page and delete it.
-9. Open a second browser or private window to show that another browser can read the review but cannot edit or delete it.
+3. Favorite Pepperoni and Cola, refresh, then enable **Show favorites only** to demonstrate OOP data plus `localStorage` persistence.
+4. Change Pepperoni between 25/30/35 cm and add two different sizes to the cart.
+5. Apply PIZZA10, change quantities, refresh and confirm the same totals remain.
+6. Submit empty checkout and contact forms, then correct the highlighted fields.
+7. Place a demo order and open its tracking link. PG1024 also works without checkout.
+8. Wait for Pizza Inspiration to show three live recipes, then explain its loading, retry and empty handling.
+9. Under `npm start`, create, edit, refresh and delete a server review. The page label must say **Server mode**.
+10. Open GitHub Pages and repeat review CRUD. The label must say **Browser mode**, and the review must survive refresh through `localStorage`.
 
 ## Project structure
 
