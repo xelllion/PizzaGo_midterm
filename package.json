@@ -1,0 +1,15 @@
+{
+    "name": "pizzago-final-project",
+    "version": "1.0.0",
+    "private": true,
+    "description": "PizzaGo student delivery website with a Node.js reviews API",
+    "scripts": {
+        "start": "node server.js",
+        "test": "node --test tests/client.test.js tests/pages.test.js tests/server.test.js",
+        "test:external": "node --test tests/external-api.test.js",
+        "test:all": "npm test && npm run test:external"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
